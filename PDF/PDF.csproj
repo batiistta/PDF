@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GerarCertificadoDigital\GerarCertificadoDigital.csproj" />
+    <ProjectReference Include="..\GerarPdf\GerarPdf.csproj" />
   </ItemGroup>
 
 </Project>

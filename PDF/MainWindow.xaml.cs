@@ -105,9 +105,7 @@ namespace PDF
             elemento.Alignment = Element.ALIGN_CENTER;
             elemento.SpacingAfter = 2;
 
-            cell.AddElement(elemento);
-
-
+            cell.AddElement(elemento);            
 
             return cell;
         }
@@ -126,6 +124,7 @@ namespace PDF
 
             doc.Open();
 
+            
             //PADRAO
             Font bold = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD);
             Font label = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);
@@ -508,5 +507,6 @@ namespace PDF
 
             #endregion
         }
+        
     }
 }
