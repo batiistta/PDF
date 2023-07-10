@@ -147,7 +147,7 @@ namespace GerarPdf
             PdfPage page = docEvent.GetPage();
 
             PdfCanvas canvas1 = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
-            Rectangle rootArea = new Rectangle(35, page.GetPageSize().GetTop() - 75, page.GetPageSize().GetWidth()-68, 55);
+            Rectangle rootArea = new Rectangle(35, page.GetPageSize().GetTop() - 75, page.GetPageSize().GetWidth()-62, 55);
             new Canvas(canvas1, pdfDoc, rootArea)
                 .Add(getTable(docEvent));
 
@@ -164,11 +164,11 @@ namespace GerarPdf
 
         private IBlockElement getTable(PdfDocumentEvent docEvent)
         {
-            float[] cellWidth = { 288,40f };
+            float[] cellWidth = { 282, 40f };
             Table tableEvent = new Table(UnitValue.CreatePercentArray(cellWidth)).UseAllAvailableWidth();
 
             Style styleCell = new Style()
-                .SetBorder(Border.NO_BORDER);
+                .SetBorder(new SolidBorder(ColorConstants.BLACK, 2));
             Style styleText = new Style()
                 .SetTextAlignment(TextAlignment.RIGHT)
                 .SetFontSize(10f);
@@ -215,7 +215,7 @@ namespace GerarPdf
 
         public Table getTable(PdfDocumentEvent docEvent)
         {
-            float[] cellWidth = { 92f, 80f };
+            float[] cellWidth = { 92f, 8f };
             Table tableEvent = new Table(UnitValue.CreatePercentArray(cellWidth)).UseAllAvailableWidth();
 
             int pageNum = docEvent.GetDocument().GetPageNumber(docEvent.GetPage());
