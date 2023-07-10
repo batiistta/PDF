@@ -25,11 +25,11 @@ namespace GerarPdf
         public void Criar()
         {
             MemoryStream ms = new MemoryStream();
-            string folderName = "arquivo";
+            string folderName = "Comprovantes";
             string fileName = "teste3.pdf";
-            string pathProject = @"C:\Users\gabriel.batista\Documents\Projeto\PDF\GerarPdf\bin\Debug\net6.0";        
+            string pathProject = @"C:\Users\gabriel.batista\Documents\Projeto\Pessoal\PDF\PDF\bin\Debug\net6.0-windows";        
 
-            string pathLogo = @"C:\Users\gabriel.batista\Documents\Projeto\PDF\GerarPdf\Images\logo2.png";
+            string pathLogo = @"C:\Users\gabriel.batista\Documents\Projeto\Pessoal\PDF\PDF\bin\Debug\net6.0-windows\Images\logo1.png";         
 
 
             string outputPath = System.IO.Path.Combine(pathProject, folderName, fileName);
@@ -39,9 +39,11 @@ namespace GerarPdf
             doc.SetMargins(75, 35, 75, 35);
 
             Image img = new Image(ImageDataFactory.Create(pathLogo));
+           
+            pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler1(img));
             pdfDocument.AddEventHandler(PdfDocumentEvent.START_PAGE, new HeaderEventHandler1(img));
             pdfDocument.AddEventHandler(PdfDocumentEvent.END_PAGE, new FooterEventHandler1());
-            pdfDocument.AddEventHandler(PdfDocumentEvent.END_PAGE, new BackgroundColorHandler());
+            //pdfDocument.AddEventHandler(PdfDocumentEvent.END_PAGE, new BackgroundColorHandler());
 
             Table table = new Table(1).UseAllAvailableWidth();
             Cell cell = new Cell().Add(new Paragraph("Produtos").SetFontSize(14))
@@ -50,7 +52,7 @@ namespace GerarPdf
             table.AddCell(cell);
             cell = new Cell().Add(new Paragraph("Produtos existentes"))
                 .SetTextAlignment(TextAlignment.CENTER)
-                .SetBorder(Border.NO_BORDER);
+                .SetBorder(Border.NO_BORDER)                ;
             table.AddCell(cell);
 
             doc.Add(table);
@@ -63,7 +65,7 @@ namespace GerarPdf
             Cell cell2 = new Cell(2, 1).Add(new Paragraph("#"));
             table2.AddHeaderCell(cell2.AddStyle(styleCell));
             cell2 = new Cell(1, 2).Add(new Paragraph("Produto"));
-            table2.AddHeaderCell(cell2.AddStyle(styleCell));
+            table2.AddHeaderCell(cell2.AddStyle(styleCell));           
             cell2 = new Cell(2, 1).Add(new Paragraph("Unidades existentes"));
             table2.AddHeaderCell(cell2.AddStyle(styleCell));
             cell2 = new Cell().Add(new Paragraph("Nome"));
@@ -145,7 +147,7 @@ namespace GerarPdf
             PdfPage page = docEvent.GetPage();
 
             PdfCanvas canvas1 = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
-            Rectangle rootArea = new Rectangle(35, page.GetPageSize().GetTop() - 75, page.GetPageSize().GetWidth() - 70, 55);
+            Rectangle rootArea = new Rectangle(35, page.GetPageSize().GetTop() - 75, page.GetPageSize().GetWidth()-68, 55);
             new Canvas(canvas1, pdfDoc, rootArea)
                 .Add(getTable(docEvent));
 
@@ -162,7 +164,7 @@ namespace GerarPdf
 
         private IBlockElement getTable(PdfDocumentEvent docEvent)
         {
-            float[] cellWidth = { 20f, 80f };
+            float[] cellWidth = { 288,40f };
             Table tableEvent = new Table(UnitValue.CreatePercentArray(cellWidth)).UseAllAvailableWidth();
 
             Style styleCell = new Style()
@@ -177,15 +179,21 @@ namespace GerarPdf
                 .AddStyle(styleCell)
                 .SetTextAlignment(TextAlignment.LEFT));
 
+
+            Cell cell1 = new Cell().Add(Img.SetAutoScale(true));
+            tableEvent.AddCell(cell1
+               .AddStyle(styleCell)
+               .SetTextAlignment(TextAlignment.RIGHT));
+
             PdfFont bold = PdfFontFactory.CreateFont(StandardFonts.TIMES_BOLD);
 
-            cell = new Cell()
-                .Add(new Paragraph("Reporte Diário\n").SetFont(bold))
-                .Add(new Paragraph("Recursos Materiais\n").SetFont(bold))
-                .Add(new Paragraph("Data de emissão: " + DateTime.Now.ToShortDateString()))
-                .AddStyle(styleText).AddStyle(styleCell);
+            //cell = new Cell()
+            //    .Add(new Paragraph("Reporte Diário\n").SetFont(bold))
+            //    .Add(new Paragraph("Recursos Materiais\n").SetFont(bold))
+            //    .Add(new Paragraph("Data de emissão: " + DateTime.Now.ToShortDateString()))
+            //    .AddStyle(styleText).AddStyle(styleCell);
 
-            tableEvent.AddCell(cell);
+            //tableEvent.AddCell(cell);
 
             return tableEvent;
         }
@@ -207,7 +215,7 @@ namespace GerarPdf
 
         public Table getTable(PdfDocumentEvent docEvent)
         {
-            float[] cellWidth = { 92f, 8f };
+            float[] cellWidth = { 92f, 80f };
             Table tableEvent = new Table(UnitValue.CreatePercentArray(cellWidth)).UseAllAvailableWidth();
 
             int pageNum = docEvent.GetDocument().GetPageNumber(docEvent.GetPage());

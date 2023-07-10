@@ -18,6 +18,7 @@ using iTextSharp.text;
 using System.Text.RegularExpressions;
 using Paragraph = iTextSharp.text.Paragraph;
 using Image = iTextSharp.text.Image;
+using GerarPdf;
 
 namespace PDF
 {
@@ -34,10 +35,12 @@ namespace PDF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var caminhoCertificado = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Certificado\\certificado.pfx" );
-            GerarCertificado criarCertificado = new GerarCertificado();
-            criarCertificado.Gerar(caminhoCertificado,"12345678");
-            TestePdf();
+            //var caminhoCertificado = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Certificado\\certificado.pfx" );
+            //GerarCertificado criarCertificado = new GerarCertificado();
+            //criarCertificado.Gerar(caminhoCertificado,"12345678");
+            //TestePdf();
+            Gerar gerar = new Gerar();
+            gerar.Criar();
         }
 
         private string getFolder()
