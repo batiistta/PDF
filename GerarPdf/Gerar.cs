@@ -27,15 +27,16 @@ namespace GerarPdf
             MemoryStream ms = new MemoryStream();
             string folderName = "Comprovantes";
             string fileName = "teste3.pdf";
-            string pathProject = @"C:\Users\gabriel.batista\Documents\Projeto\Pessoal\PDF\PDF\bin\Debug\net6.0-windows";        
+            string pathProject = @"C:\Users\Gabriel\Desktop\Códigos\PDF\PDF\bin\Debug\net6.0-windows";        
 
-            string pathLogo = @"C:\Users\gabriel.batista\Documents\Projeto\Pessoal\PDF\PDF\bin\Debug\net6.0-windows\Images\logo1.png";         
+            string pathLogo = @"C:\Users\Gabriel\Desktop\Códigos\PDF\PDF\bin\Debug\net6.0-windows\Images\logo1.png";         
 
 
             string outputPath = System.IO.Path.Combine(pathProject, folderName, fileName);
             PdfWriter pw = new PdfWriter(outputPath);
             PdfDocument pdfDocument = new PdfDocument(pw);
             Document doc = new Document(pdfDocument, PageSize.A4);
+
             doc.SetMargins(75, 35, 75, 35);
 
             Image img = new Image(ImageDataFactory.Create(pathLogo));
@@ -122,6 +123,26 @@ namespace GerarPdf
 
             doc.Close();
 
+            //PdfDocument pdfDocument2 = new PdfDocument(new PdfReader(outputPath), new PdfWriter("caminho_do_arquivo_com_retangulo.pdf"));
+            //Document doc2 = new Document(pdfDocument2);
+
+            //Rectangle pageSize = pdfDocument2.GetPage(1).GetPageSize();
+            //PdfCanvas canvas = new PdfCanvas(pdfDocument2.GetPage(1));
+
+            //float x1 = pageSize.GetLeft() + 30;
+            //float y2 = pageSize.GetBottom() + 30;
+            //float width2 = pageSize.GetWidth() - 20;
+            //float height2 = pageSize.GetHeight() - 20;
+
+            //canvas.SaveState()
+            //    .SetLineWidth(1)
+            //    .SetStrokeColor(ColorConstants.BLACK)
+            //    .Rectangle(x1, y2, width2, height2)
+            //    .Stroke()
+            //    .RestoreState();
+
+            //doc2.Close();
+
 
 
             /*byte[] bytesStream = ms.ToArray();
@@ -138,7 +159,11 @@ namespace GerarPdf
         Image Img;
         public HeaderEventHandler1(Image img)
         {
+
+            
             Img = img;
+
+            
         }
         public void HandleEvent(Event @event)
         {
